@@ -1,7 +1,10 @@
 {{ define "main" }}
-<section class="feed">
-  {{ range first 10 (where .Site.RegularPages "Section" "posts") }}
+<section class="feed h-feed">
+  {{ range first 3 (where .Site.Pages.ByDate.Reverse "Type" "post") }}
     {{ partial "sail.html" . }}
   {{ end }}
 </section>
+<p class="p-author h-card" hidden>
+  <a class="p-name u-url" href="{{ .Site.BaseURL }}">{{ .Site.Params.author | default .Site.Title }}</a>
+</p>
 {{ end }}

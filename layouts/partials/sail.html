@@ -1,9 +1,16 @@
 {{/* Renders a single post card as a "sail" hung from a wooden yard. Pass a page context. */}}
-<article class="sail-frame">
+<article class="sail-frame h-entry">
   <div class="sail-yard" aria-hidden="true"></div>
   <div class="sail">
-    <h2 class="sail-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-    <time class="sail-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-    <div class="sail-body">{{ .Summary }}</div>
+    <h2 class="sail-title p-name">
+      <a class="u-url" href="{{ .RelPermalink }}">
+        {{ if .Title }}
+          {{ .Title }}
+        {{else}}
+          {{ .Date.Format "Jan 2, 2006" }}
+        {{end}}
+      </a></h2>
+    <time class="sail-date dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+    <div class="sail-body e-content">{{ .Content }}</div>
   </div>
 </article>
