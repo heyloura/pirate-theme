@@ -39,45 +39,6 @@
   </div>
 </aside>
 
-{{/* Dispatches from the fleet — Micro.blog conversation wrapped in a
-     furled-sail <details>, mirroring the archive year pattern. */}}
-<section class="comments-section">
-  <header class="comments-header sail-frame sail-frame--small">
-    <div class="sail-yard" aria-hidden="true"></div>
-    <div class="comments-header-sail">
-      <h2 class="comments-page-title">Dispatches from the fleet</h2>
-      <p class="page-lede">What passing ships signaled back</p>
-    </div>
-  </header>
-
-  <details class="comments-furl" open>
-    <summary class="comments-yard">
-      <span class="comments-furl-label">Unfurl the messages</span>
-      <span class="comments-furl-count" data-count=""></span>
-    </summary>
-    <div class="comments-sail">
-      <button class="message-bottle-btn" type="button" data-open-reply>
-        Send a message in a bottle
-      </button>
-      <div class="microblog-convo-wrap">
-        <script src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
-      </div>
-    </div>
-  </details>
-</section>
-
-{{/* Reply modal — burnt parchment + faded treasure map. Micro.blog's reply
-     form gets moved in by JS so its action URL and hidden tokens stay intact. */}}
-<dialog class="reply-modal" id="replyModal" aria-labelledby="replyModalTitle">
-  <div class="reply-modal-paper">
-    <div class="reply-modal-map" aria-hidden="true"></div>
-    <button class="reply-modal-close" type="button" aria-label="Close reply" data-close-reply>&#x2715;</button>
-    <h3 id="replyModalTitle" class="reply-modal-title">Pen yer reply</h3>
-    <p class="reply-modal-sub">Scratch a message on the parchment and cast it off.</p>
-    <div class="reply-modal-form-slot"></div>
-  </div>
-</dialog>
-
 <script>
 (function(){
   var modal = document.getElementById('replyModal');

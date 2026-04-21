@@ -105,8 +105,7 @@
 
     <!-- Interactive deck items -->
     <div class="deck-items">
-      {{ with .Site.Params.fediverse }}
-      <a href="{{ . }}" class="deck-item deck-parrot" rel="me"
+      <a href="https://micro.blog/heyloura?remote_follow=1" class="deck-item deck-parrot" rel="me"
          aria-label="Find me on the fediverse" title="Fediverse">
         <span class="parrot-bubble" aria-hidden="true"></span>
         <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -118,7 +117,6 @@
           <path d="M 18 35 L 17 39 M 22 35 L 23 39" stroke="#d4a017" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </a>
-      {{ end }}
 
       <!-- Three portholes on left hull, stepped diagonally (following hull's outward curve) -->
       {{/* TODO: replace # hrefs with the real IndieWeb Webring prev/next URLs */}}
@@ -178,7 +176,7 @@
         <span class="cannon-smoke" aria-hidden="true"></span>
       </button>
 
-      <a {{ with .Site.Params.tinylytics_stats_url }}href="{{ . }}" target="_blank" rel="noopener"{{ end }}
+      <a href="https://tinylytics.app/public/k8W9_T_FtwGM-5zeSNC7" target="_blank" rel="noopener"
          class="deck-item deck-chest" aria-label="Gold pieces plundered — view site stats">
         <svg viewBox="0 0 48 40" aria-hidden="true">
           <path d="M 4 20 L 44 20 L 44 36 L 4 36 Z" fill="#8b6f47" stroke="#3d2e1a" stroke-width="1.5"/>
@@ -217,8 +215,7 @@
         </svg>
       </a>
 
-      {{ with .Site.Params.email }}
-      <a href="mailto:{{ . }}" class="deck-item deck-bottle"
+      <a href="mailto:hello@heyloura.com" class="deck-item deck-bottle"
          aria-label="Send a message in a bottle" title="Contact">
         <svg viewBox="0 0 40 40" aria-hidden="true">
           <path d="M 16 14 L 16 9 L 24 9 L 24 14 Q 30 16 30 22 L 30 34 Q 30 37 27 37 L 13 37 Q 10 37 10 34 L 10 22 Q 10 16 16 14 Z"
@@ -230,7 +227,6 @@
           <line x1="16" y1="29" x2="22" y2="29" stroke="#8b6f47" stroke-width="0.5"/>
         </svg>
       </a>
-      {{ end }}
     </div>
 
     <!-- Kraken tentacles — hidden, triggered by Konami code. Rise from both sides of the ship, whip around, sink back. -->
