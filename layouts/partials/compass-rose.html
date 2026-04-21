@@ -1,0 +1,72 @@
+{{/* Compass rose primary nav. First 4 menu items map to N, E, S, W by order. */}}
+{{ $positions := slice "n" "e" "s" "w" }}
+<nav class="compass-rose" aria-label="Primary navigation">
+  <svg viewBox="0 0 120 120" class="compass-svg" aria-hidden="true">
+    <!-- Outer brass ring -->
+    <circle cx="60" cy="60" r="56" fill="var(--sail)" stroke="var(--rope)" stroke-width="2"/>
+    <!-- Inner dashed ring -->
+    <circle cx="60" cy="60" r="48" fill="none" stroke="var(--rope)" stroke-width="0.5" opacity="0.5" stroke-dasharray="1.5 2"/>
+
+    <!-- Cardinal tick marks on outer ring -->
+    <g stroke="var(--rope)" stroke-width="1" opacity="0.8">
+      <line x1="60" y1="3" x2="60" y2="9"/>
+      <line x1="60" y1="111" x2="60" y2="117"/>
+      <line x1="3" y1="60" x2="9" y2="60"/>
+      <line x1="111" y1="60" x2="117" y2="60"/>
+    </g>
+    <!-- Ordinal tick marks (smaller) -->
+    <g stroke="var(--rope)" stroke-width="0.6" opacity="0.5">
+      <line x1="99" y1="21" x2="103" y2="17"/>
+      <line x1="99" y1="99" x2="103" y2="103"/>
+      <line x1="21" y1="99" x2="17" y2="103"/>
+      <line x1="21" y1="21" x2="17" y2="17"/>
+    </g>
+
+    <!-- 8-point compass star: cardinal long, ordinal short -->
+    <g class="compass-star">
+      <!-- Long cardinal points (two-tone for 3D feel) -->
+      <polygon points="60,15 60,60 56,60" fill="var(--ink)" opacity="0.45"/>
+      <polygon points="60,15 60,60 64,60" fill="var(--ink)" opacity="0.7"/>
+      <polygon points="105,60 60,60 60,56" fill="var(--ink)" opacity="0.45"/>
+      <polygon points="105,60 60,60 60,64" fill="var(--ink)" opacity="0.7"/>
+      <polygon points="60,105 60,60 64,60" fill="var(--ink)" opacity="0.45"/>
+      <polygon points="60,105 60,60 56,60" fill="var(--ink)" opacity="0.7"/>
+      <polygon points="15,60 60,60 60,64" fill="var(--ink)" opacity="0.45"/>
+      <polygon points="15,60 60,60 60,56" fill="var(--ink)" opacity="0.7"/>
+
+      <!-- Short ordinal points -->
+      <g opacity="0.3">
+        <polygon points="86,34 60,60 56,60" fill="var(--ink)"/>
+        <polygon points="86,34 60,60 60,56" fill="var(--ink)"/>
+        <polygon points="86,86 60,60 60,64" fill="var(--ink)"/>
+        <polygon points="86,86 60,60 56,60" fill="var(--ink)"/>
+        <polygon points="34,86 60,60 60,56" fill="var(--ink)"/>
+        <polygon points="34,86 60,60 64,60" fill="var(--ink)"/>
+        <polygon points="34,34 60,60 64,60" fill="var(--ink)"/>
+        <polygon points="34,34 60,60 60,64" fill="var(--ink)"/>
+      </g>
+    </g>
+
+    <!-- Animated needle (red north, cream south) -->
+    <g class="compass-needle">
+      <polygon points="60,22 64,60 56,60" fill="#c44"/>
+      <polygon points="60,98 64,60 56,60" fill="var(--sail)" stroke="var(--rope)" stroke-width="0.5"/>
+    </g>
+
+    <!-- Center hub -->
+    <circle cx="60" cy="60" r="3" fill="var(--rope)" stroke="var(--ink)" stroke-width="0.5"/>
+  </svg>
+
+  <div class="sail-frame sail-frame--small sail-frame--nav">
+    <div class="sail-yard" aria-hidden="true"></div>
+    <ul class="compass-nav">
+      {{ range $i, $item := .Site.Menus.main }}
+        {{ if lt $i 4 }}
+        <li class="compass-{{ index $positions $i }}"><a href="{{ $item.URL | relURL }}">{{ $item.Name }}</a></li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </div>
+
+  <button class="compass-center" type="button" aria-label="More pages (coming soon)" data-more-toggle>+</button>
+</nav>

@@ -1,0 +1,7 @@
+{{ define "main" }}
+<section class="feed">
+  {{ range first 10 (where .Site.RegularPages "Section" "posts") }}
+    {{ partial "sail.html" . }}
+  {{ end }}
+</section>
+{{ end }}

@@ -1,0 +1,11 @@
+{{/* Wrap every markdown image in a polaroid figure with a pinning dagger.
+     Applies everywhere markdown images render inside a sail body. */}}
+{{- $alt := .PlainText -}}
+{{- $title := .Title -}}
+<figure class="polaroid">
+  <img src="{{ .Destination | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async"{{ with $title }} title="{{ . }}"{{ end }}>
+  {{ partial "photo-dagger.svg" . }}
+  {{- with $title -}}
+  <figcaption>{{ . }}</figcaption>
+  {{- end -}}
+</figure>

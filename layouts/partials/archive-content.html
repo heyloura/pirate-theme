@@ -1,0 +1,45 @@
+{{/* Archive listing — posts grouped by year, each year a furled/unfurled sail.
+     Marked up with IndieWeb microformats (h-feed, h-entry, u-url, p-name, p-summary, dt-published).
+     Used from both list.archivehtml.html (Micro.blog) and _default/archivehtml.html (local Hugo). */}}
+<section class="archive">
+
+  <header class="archive-header sail-frame sail-frame--small">
+    <div class="sail-yard" aria-hidden="true"></div>
+    <div class="archive-header-sail">
+      <h1 class="page-title archive-page-title">{{ .Title }}</h1>
+      <p class="page-lede">A log of every port visited</p>
+    </div>
+  </header>
+
+  {{ $posts := (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+  {{ $byYear := $posts.GroupByDate "2006" }}
+  {{ $currentYear := now.Year }}
+
+  <div class="archive-years h-feed">
+    {{ range $byYear }}
+    <details class="archive-year"{{ if eq (int .Key) $currentYear }} open{{ end }}>
+      <summary class="archive-yard">
+        <span class="archive-year-label">{{ .Key }}</span>
+        <span class="archive-year-count">{{ len .Pages }} {{ if eq (len .Pages) 1 }}entry{{ else }}entries{{ end }}</span>
+      </summary>
+      <ul class="archive-sail">
+        {{ range .Pages }}
+        <li class="archive-entry h-entry">
+          <a href="{{ .RelPermalink }}" class="archive-link u-url">
+            <time class="dt-published" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2" }}</time>
+            {{ if .Title }}
+              <span class="archive-title p-name">{{ .Title }}</span>
+              {{ with (.Summary | plainify | truncate 160) }}
+                <span class="archive-excerpt p-summary">{{ . }}</span>
+              {{ end }}
+            {{ else }}
+              <span class="archive-excerpt p-summary">{{ .Summary | plainify | truncate 180 }}</span>
+            {{ end }}
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </details>
+    {{ end }}
+  </div>
+</section>

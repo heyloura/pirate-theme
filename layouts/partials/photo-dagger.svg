@@ -1,0 +1,19 @@
+<svg class="photo-dagger" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+  {{/* Point-down cutlass: pommel pokes above the photo edge, blade stabs into it.
+       Small natural lean for visual interest. */}}
+  <g transform="rotate(-8 20 20)">
+    {{/* Pommel (gold with red gem) — sits above the photo edge */}}
+    <circle cx="20" cy="6" r="2.4" fill="#d4a017" stroke="#5a3e08" stroke-width="0.4"/>
+    <circle cx="20" cy="6" r="0.8" fill="#b02a2a"/>
+    {{/* Grip (wood wrap) */}}
+    <rect x="18" y="8.5" width="4" height="7" fill="#6a3f18" stroke="#3a2010" stroke-width="0.4"/>
+    <line x1="18" y1="10.5" x2="22" y2="10.5" stroke="#3a2010" stroke-width="0.3"/>
+    <line x1="18" y1="12" x2="22" y2="12" stroke="#3a2010" stroke-width="0.3"/>
+    <line x1="18" y1="13.5" x2="22" y2="13.5" stroke="#3a2010" stroke-width="0.3"/>
+    {{/* Crossguard */}}
+    <rect x="14" y="15.5" width="12" height="2" rx="0.5" fill="#a37a1a" stroke="#5a3e08" stroke-width="0.4"/>
+    {{/* Blade (tip pointing down, buried in the photo) */}}
+    <polygon points="18.5,17.5 21.5,17.5 21,34 20,36 19,34" fill="#d8d8e0" stroke="#3a3a45" stroke-width="0.4"/>
+    <line x1="20" y1="18.5" x2="20" y2="34" stroke="#9a9aa6" stroke-width="0.35"/>
+  </g>
+</svg>

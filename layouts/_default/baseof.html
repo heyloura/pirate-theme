@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}" data-theme="auto">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="sky-layer" aria-hidden="true"></div>
+  <div class="sea-layer" aria-hidden="true">
+    {{ partial "waves.html" . }}
+  </div>
+  {{ partial "sky-decor.html" . }}
+
+  {{ partial "header.html" . }}
+
+  <main class="mast-wrapper" id="main" tabindex="-1">
+    <div class="mast" aria-hidden="true"></div>
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  <script src="{{ "js/pirate.js" | relURL }}" defer></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{{/* Photos listing — posts grouped by year, each year a furled/unfurled sail.
+     Masonry-style grid (natural aspect) via CSS columns. Each tile is a burnt
+     polaroid with a small dagger pinning it to the sail; clicking opens the
+     owning post. Closed years defer image bytes via data-src (swapped on
+     <details> toggle) so large libraries don't download everything up-front. */}}
+<section class="photos">
+
+  <header class="archive-header sail-frame sail-frame--small">
+    <div class="sail-yard" aria-hidden="true"></div>
+    <div class="archive-header-sail">
+      <h1 class="page-title archive-page-title">{{ .Title }}</h1>
+      <p class="page-lede">Treasures from the voyage</p>
+    </div>
+  </header>
+
+  {{ $postsWithPhotos := where (where .Site.RegularPages "Section" "posts").ByDate.Reverse "Params.photos" "!=" nil }}
+  {{ $byYear := $postsWithPhotos.GroupByDate "2006" }}
+  {{ $currentYear := now.Year }}
+
+  <div class="photos-years">
+    {{ range $byYear }}
+    {{ $isCurrent := eq (int .Key) $currentYear }}
+    {{ $count := 0 }}
+    {{ range .Pages }}{{ $count = add $count (len .Params.photos) }}{{ end }}
+    <details class="photos-year archive-year"{{ if $isCurrent }} open{{ end }} data-year="{{ .Key }}">
+      <summary class="archive-yard">
+        <span class="archive-year-label">{{ .Key }}</span>
+        <span class="archive-year-count">{{ $count }} {{ if eq $count 1 }}photo{{ else }}photos{{ end }}</span>
+      </summary>
+      <div class="photos-sail">
+        {{ range .Pages }}
+          {{ $post := . }}
+          {{ range $post.Params.photos }}
+          <a class="photo-tile" href="{{ $post.RelPermalink }}">
+            <span class="photo-tile-frame">
+              <img
+                {{ if $isCurrent }}src="{{ . }}"{{ else }}data-src="{{ . }}"{{ end }}
+                loading="lazy"
+                decoding="async"
+                alt="{{ $post.Title | default (printf "Photo from %s" ($post.Date.Format "Jan 2, 2006")) }}">
+            </span>
+            {{ partial "photo-dagger.svg" . }}
+          </a>
+          {{ end }}
+        {{ end }}
+      </div>
+    </details>
+    {{ end }}
+  </div>
+</section>
+
+<script>
+(function(){
+  document.querySelectorAll('.photos-year').forEach(function(yr){
+    yr.addEventListener('toggle', function(){
+      if (!yr.open) return;
+      yr.querySelectorAll('img[data-src]').forEach(function(img){
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      });
+    });
+  });
+})();
+</script>

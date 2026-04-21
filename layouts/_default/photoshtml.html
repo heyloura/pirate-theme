@@ -1,0 +1,5 @@
+{{/* Local-dev fallback — Hugo picks this up when content/photos.md has layout:photoshtml.
+     Micro.blog uses layouts/list.photoshtml.html instead (both include the same partial). */}}
+{{ define "main" }}
+{{ partial "photos-content.html" . }}
+{{ end }}

@@ -1,0 +1,126 @@
+{{ define "main" }}
+{{/* Single post — titleless-friendly, wrapped in h-entry microformats.
+     Micro.blog often produces title-less short posts; when there's no title we
+     skip the <h1> and let the content speak. Categories render as flag chips
+     beneath whichever metadata line is present (title or date). */}}
+<article class="sail-frame sail-frame--single h-entry">
+  <div class="sail-yard" aria-hidden="true"></div>
+  <div class="sail sail--single{{ if not .Title }} sail--note{{ end }}">
+    {{ if .Title }}
+    <h1 class="sail-title p-name">{{ .Title }}</h1>
+    {{ end }}
+    {{ if not .Date.IsZero }}
+    <a class="sail-permalink u-url" href="{{ .Permalink }}" rel="bookmark">
+      <time class="sail-date dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">Captain's Log, {{ .Date.Format "Jan 2, 2006" }}</time>
+    </a>
+    {{ end }}
+    {{ with .Params.categories }}
+    <ul class="post-flags" aria-label="Categories">
+      {{ range . }}
+      <li class="post-flag"><a class="p-category" href="{{ "/categories/" | relURL }}{{ . | urlize }}/">{{ . }}</a></li>
+      {{ end }}
+    </ul>
+    {{ end }}
+    <div class="sail-body e-content">{{ .Content }}</div>
+    <p class="p-author h-card" hidden>
+      <a class="p-name u-url" href="{{ .Site.BaseURL }}">{{ .Site.Params.author | default .Site.Title }}</a>
+    </p>
+  </div>
+</article>
+
+{{/* Tinylytics kudos — "hoist the colors". Standalone flagpole on the mast,
+     between the post sail and the comments section. */}}
+<aside class="kudos-banner" aria-label="Salute the captain">
+  <div class="kudos-pole" aria-hidden="true"></div>
+  <div class="kudos-control">
+    {{/* Fallback <button> inside the Tinylytics container so the flag renders
+         in local dev (where the script can't populate the element).
+         In production Tinylytics replaces the innerHTML with its own count button. */}}
+    <div class="tinylytics_kudos">
+      <button type="button" class="tinylytics_kudos_button kudos-fallback">Hoist</button>
+    </div>
+    <p class="kudos-label">Hoist the colors if this tale stirred ye</p>
+  </div>
+</aside>
+
+{{/* Dispatches from the fleet — Micro.blog conversation wrapped in a
+     furled-sail <details>, mirroring the archive year pattern. */}}
+<section class="comments-section">
+  <header class="comments-header sail-frame sail-frame--small">
+    <div class="sail-yard" aria-hidden="true"></div>
+    <div class="comments-header-sail">
+      <h2 class="comments-page-title">Dispatches from the fleet</h2>
+      <p class="page-lede">What passing ships signaled back</p>
+    </div>
+  </header>
+
+  <details class="comments-furl" open>
+    <summary class="comments-yard">
+      <span class="comments-furl-label">Unfurl the messages</span>
+      <span class="comments-furl-count" data-count=""></span>
+    </summary>
+    <div class="comments-sail">
+      <button class="message-bottle-btn" type="button" data-open-reply>
+        Send a message in a bottle
+      </button>
+      <div class="microblog-convo-wrap">
+        <script src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
+      </div>
+    </div>
+  </details>
+</section>
+
+{{/* Reply modal — burnt parchment + faded treasure map. Micro.blog's reply
+     form gets moved in by JS so its action URL and hidden tokens stay intact. */}}
+<dialog class="reply-modal" id="replyModal" aria-labelledby="replyModalTitle">
+  <div class="reply-modal-paper">
+    <div class="reply-modal-map" aria-hidden="true"></div>
+    <button class="reply-modal-close" type="button" aria-label="Close reply" data-close-reply>&#x2715;</button>
+    <h3 id="replyModalTitle" class="reply-modal-title">Pen yer reply</h3>
+    <p class="reply-modal-sub">Scratch a message on the parchment and cast it off.</p>
+    <div class="reply-modal-form-slot"></div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  var modal = document.getElementById('replyModal');
+  if (!modal) return;
+  var slot = modal.querySelector('.reply-modal-form-slot');
+  var openBtns = document.querySelectorAll('[data-open-reply]');
+  var closeBtns = modal.querySelectorAll('[data-close-reply]');
+  var countEl = document.querySelector('.comments-furl-count');
+
+  var tries = 0;
+  function moveForm(){
+    var form = document.querySelector('.microblog_reply_form');
+    if (form && form.parentNode !== slot) { slot.appendChild(form); return; }
+    if (!form && tries++ < 60) setTimeout(moveForm, 200);
+  }
+  moveForm();
+
+  function updateCount(){
+    var posts = document.querySelectorAll('.microblog_conversation .microblog_post');
+    if (!countEl) return;
+    var n = posts.length;
+    countEl.setAttribute('data-count', n + ' ' + (n === 1 ? 'message' : 'messages'));
+  }
+  setTimeout(updateCount, 500);
+  setTimeout(updateCount, 1500);
+  setTimeout(updateCount, 3000);
+
+  openBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      if (typeof modal.showModal === 'function') modal.showModal();
+      else modal.setAttribute('open', 'open');
+    });
+  });
+  closeBtns.forEach(function(b){
+    b.addEventListener('click', function(){ modal.close && modal.close(); modal.removeAttribute('open'); });
+  });
+  modal.addEventListener('click', function(e){
+    if (e.target === modal) { modal.close && modal.close(); modal.removeAttribute('open'); }
+  });
+})();
+</script>
+{{ end }}

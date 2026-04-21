@@ -1,0 +1,5 @@
+{{/* Local-dev fallback — Hugo picks this up when content/archive.md has layout:archivehtml.
+     Micro.blog uses layouts/list.archivehtml.html instead (both include the same partial). */}}
+{{ define "main" }}
+{{ partial "archive-content.html" . }}
+{{ end }}
