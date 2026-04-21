@@ -11,6 +11,6 @@
         {{end}}
       </a></h2>
     <time class="sail-date dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-    <div class="sail-body e-content">{{ .Content }}</div>
+    <div class="sail-body e-content">{{ .Content | plainify | truncate 300 }}</div>
   </div>
 </article>
