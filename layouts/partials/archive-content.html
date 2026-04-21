@@ -11,7 +11,7 @@
     </div>
   </header>
 
-  {{ $posts := (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+  {{ $posts := (where .Site.Pages.ByDate.Reverse "Type" "post").ByDate.Reverse }}
   {{ $byYear := $posts.GroupByDate "2006" }}
   {{ $currentYear := now.Year }}
 
@@ -33,7 +33,7 @@
                 <span class="archive-excerpt p-summary">{{ . }}</span>
               {{ end }}
             {{ else }}
-              <span class="archive-excerpt p-summary">{{ .Summary | plainify | truncate 180 }}</span>
+              <span class="archive-excerpt p-summary">{{ .Summary | plainify | truncate 300 }}</span>
             {{ end }}
           </a>
         </li>

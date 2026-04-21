@@ -13,7 +13,7 @@
     </div>
   </header>
 
-  {{ $postsWithPhotos := where (where .Site.RegularPages "Section" "posts").ByDate.Reverse "Params.photos" "!=" nil }}
+  {{ $postsWithPhotos := where (where .Site.Pages.ByDate.Reverse "Type" "post").ByDate.Reverse "Params.photos" "!=" nil }}
   {{ $byYear := $postsWithPhotos.GroupByDate "2006" }}
   {{ $currentYear := now.Year }}
 
