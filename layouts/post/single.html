@@ -32,8 +32,9 @@
     {{/* Fallback <button> inside the Tinylytics container so the flag renders
          in local dev (where the script can't populate the element).
          In production Tinylytics replaces the innerHTML with its own count button. */}}
-    <div class="tinylytics_kudos">
-      <button type="button" class="tinylytics_kudos_button kudos-fallback">Hoist</button>
+    <div class="tinylytics_kudos_button kudos-fallback">
+      <span>Hoist</span>
+      <button type="button" class="tinylytics_kudos"></button>
     </div>
     <p class="kudos-label">Hoist the colors if this tale stirred ye</p>
   </div>
