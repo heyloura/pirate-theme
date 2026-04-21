@@ -1,8 +1,38 @@
 {{ define "main" }}
-<section class="feed">
-  <h1 class="page-title">{{ .Title }}</h1>
-  {{ range .Pages }}
-    {{ partial "sail.html" . }}
-  {{ end }}
+<section class="archive">
+
+  <header class="archive-header sail-frame sail-frame--small">
+    <div class="sail-yard" aria-hidden="true"></div>
+    <div class="archive-header-sail">
+      <p class="page-lede">Curated logs</p>
+    </div>
+  </header>
+
+  {{ $posts := (where .Pages.ByDate.Reverse "Type" "post").ByDate.Reverse }}
+
+  <div class="archive-years h-feed">
+    <details class="archive-year" open>
+      <summary class="archive-yard">
+
+      </summary>
+      <ul class="archive-sail">
+        {{ range $posts }}
+        <li class="archive-entry h-entry">
+          <a href="{{ .RelPermalink }}" class="archive-link u-url">
+            <time class="dt-published" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2" }}</time>
+            {{ if .Title }}
+              <span class="archive-title p-name">{{ .Title }}</span>
+              {{ with (.Summary | plainify | truncate 160) }}
+                <span class="archive-excerpt p-summary">{{ . }}</span>
+              {{ end }}
+            {{ else }}
+              <span class="archive-excerpt p-summary">{{ .Summary | plainify | truncate 180 }}</span>
+            {{ end }}
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </details>
+  </div>
 </section>
 {{ end }}

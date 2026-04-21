@@ -33,7 +33,7 @@
                 <span class="archive-excerpt p-summary">{{ . }}</span>
               {{ end }}
             {{ else }}
-              <span class="archive-excerpt p-summary">{{ .Summary | plainify | truncate 300 }}</span>
+              <span class="archive-excerpt p-summary">{{ .Summary | plainify | truncate 180 }}</span>
             {{ end }}
           </a>
         </li>
